@@ -56,13 +56,23 @@ class Home extends StatelessWidget {
                         margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
                         child: FilledButton(
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all(
-                                  EdgeInsets.all(15))),
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.all(15)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              side: MaterialStateProperty.all(
+                                  BorderSide(color: Colors.blue.shade300))),
                           onPressed: () =>
                               {Navigator.pushNamed(context, "${e['link']}")},
+                          onHover: (value) => {
+                            ButtonStyle(
+                                side: MaterialStateProperty.all(
+                                    BorderSide(color: Colors.black)))
+                          },
                           child: Text(
                             '${e["text"]}',
-                            style: TextStyle(fontSize: 24.0),
+                            style:
+                                TextStyle(fontSize: 24.0, color: Colors.black),
                           ),
                         )))
                     .toList(),
