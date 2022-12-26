@@ -9,13 +9,15 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     // 나중에 api로 가져올 것들
     var bannerData = [
-      {'text': 'go shops', 'link': '/shops'},
-      {'text': 'go home', 'link': '/'},
-      {'text': 'go widgets', 'link': '/widgets'},
-      {'text': 'go shops', 'link': '/shops'},
-      {'text': 'go home', 'link': '/'},
-      {'text': 'go widgets', 'link': '/widgets'}
+      {'name': 'go shops', 'link': '/shops'},
+      {'name': 'go home', 'link': '/'},
+      {'name': 'go widgets', 'link': '/widgets'},
+      {'name': 'go shops', 'link': '/shops'},
+      {'name': 'go home', 'link': '/'},
+      {'name': 'go widgets', 'link': '/widgets'}
     ];
+
+    bool hovered = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,26 +56,22 @@ class Home extends StatelessWidget {
                 children: bannerData
                     .map((e) => Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                        child: FilledButton(
+                        child: TextButton(
+                          child: Text(
+                            '${e["name"]}',
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 22.0),
+                          ),
                           style: ButtonStyle(
                               padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(15)),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                              side: MaterialStateProperty.all(
-                                  BorderSide(color: Colors.blue.shade300))),
+                                  MaterialStatePropertyAll(EdgeInsets.all(15)),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                      side: BorderSide(
+                                          color: Colors.blue.shade300)))),
                           onPressed: () =>
-                              {Navigator.pushNamed(context, "${e['link']}")},
-                          onHover: (value) => {
-                            ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    BorderSide(color: Colors.black)))
-                          },
-                          child: Text(
-                            '${e["text"]}',
-                            style:
-                                TextStyle(fontSize: 24.0, color: Colors.black),
-                          ),
+                              {Navigator.pushNamed(context, '${e["link"]}')},
                         )))
                     .toList(),
               ),
@@ -96,6 +94,29 @@ class Home extends StatelessWidget {
     );
   }
 }
+
+/*
+FilledButton(
+                          style: ButtonStyle(
+                              padding:
+                                  MaterialStateProperty.all(EdgeInsets.all(15)),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.transparent),
+                              side: MaterialStateProperty.all(
+                                  BorderSide(color: Colors.blue.shade300))),
+                          onPressed: () =>
+                              {Navigator.pushNamed(context, "${e['link']}")},
+                          onHover: (value) => {
+                            hovered = value
+                          },
+                          child: Text(
+                            '${e["text"]}',
+                            style:
+                                TextStyle(fontSize: 24.0, color: Colors.black),
+                          ),
+                        )
+
+ */
 
 /*
 [1, 2, 3, 4, 5].map((i) {
