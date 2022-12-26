@@ -5,6 +5,11 @@ class Shops extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: TextButton(
+        child: Text('go home'),
+        onPressed: () => {Navigator.pushNamed(context, '/')},
+      ),
+    );
   }
 }

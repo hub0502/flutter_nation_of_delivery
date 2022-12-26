@@ -20,13 +20,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes: {
-          '/': (context) => Home(),
-          '/widgets': (context) => widgets(),
-          '/shops': (context) => Shops(),
-        },
-        initialRoute: '/');
+    return MaterialApp(routes: {
+      '/': (context) => Home(),
+      '/widgets': (context) => widgets(),
+      '/shops': (context) => Shops(),
+    }, initialRoute: '/');
   }
 }
