@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nation_of_delivery/pages/WidgetPage.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -29,7 +27,9 @@ class Home extends StatelessWidget {
               icon: Icon(Icons.widgets),
               onPressed: () => {Navigator.pushNamed(context, '/widgets')}),
           IconButton(icon: Icon(Icons.notifications_none), onPressed: () => {}),
-          IconButton(icon: Icon(Icons.person), onPressed: () => {}),
+          IconButton(
+              icon: Icon(Icons.person),
+              onPressed: () => {Navigator.pushNamed(context, '/mypage')}),
         ],
       ),
       body: Column(children: [
