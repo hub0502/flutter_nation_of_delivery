@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nation_of_delivery/pages/HomePage.dart';
+import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
 import 'package:flutter_nation_of_delivery/pages/Shops.dart';
 import 'package:flutter_nation_of_delivery/pages/WidgetPage.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       '/': (context) => Home(),
       '/widgets': (context) => Widgets(),
       '/shops': (context) => Shops(),
-      '/mypage': (context) => MyPage()
+      '/mypage': (context) => MyPage(),
+      '/login': (context) => LoginPage()
     }, initialRoute: '/');
   }
 }

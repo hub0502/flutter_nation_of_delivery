@@ -15,8 +15,6 @@ class Home extends StatelessWidget {
       {'name': 'go widgets', 'link': '/widgets'}
     ];
 
-    bool hovered = false;
-
     return Scaffold(
       appBar: AppBar(
         title: Container(

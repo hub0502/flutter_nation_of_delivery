@@ -30,7 +30,38 @@ class MyPage extends StatelessWidget {
             width: double.infinity,
             height: 200,
             fit: BoxFit.cover,
-          )
+          ),
+          //로그인 되면 이미지와 이름으로 바껴야함
+          TextButton(
+              onPressed: () => {Navigator.pushNamed(context, '/login')},
+              child: Container(
+                padding: EdgeInsets.all(24),
+                width: double.infinity,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.account_circle,
+                            size: 50,
+                            color: Colors.grey.shade700,
+                          ),
+                          SizedBox(width: 20),
+                          Text(
+                            '로그인해주세요',
+                            style: TextStyle(
+                                fontSize: 24, color: Colors.grey.shade700),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                        size: 24,
+                        color: Colors.grey.shade700,
+                      ),
+                    ]),
+              ))
         ]),
       ),
     );
