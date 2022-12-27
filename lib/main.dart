@@ -5,7 +5,6 @@ import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
 import 'package:flutter_nation_of_delivery/pages/Shops.dart';
 import 'package:flutter_nation_of_delivery/pages/WidgetPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
