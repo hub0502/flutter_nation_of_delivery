@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -72,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
       try {
         var user = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
-
+        if (_formKey.currentState!.validate()) {}
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
         checkLogin();
       } on FirebaseAuthException catch (e) {
@@ -128,83 +129,93 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-              alignment: Alignment(-1.0, 0.0),
-              child: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () => {Navigator.pop(context)},
-              )),
-          Container(
-              height: MediaQuery.of(context).size.height * 0.9,
-              padding: EdgeInsets.all(40),
-              child: Column(
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Scaffold(
+              body: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    children: [
-                      inputBox("아이디 또는 이메일", _emailController),
-                      inputBox("비밀번호", _passwordController),
-                      selfLoginBtn(),
-                      Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(20),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextButton(
-                                  onPressed: () => checkLogin(),
-                                  child: Text(
-                                    '아이디 찾기',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        color: Colors.grey.shade600),
-                                  ),
-                                ),
-                                Text('  |  ',
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        color: Colors.grey.shade600)),
-                                TextButton(
-                                  onPressed: () => {},
-                                  child: Text('비밀번호 찾기',
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          color: Colors.grey.shade600)),
-                                )
-                              ]))
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      // TextButton(onPressed: () => {}, child: Container()),
-                      iconLoginBtn('페이스북으로 로그인', Icon(Icons.facebook), {test}),
-                      // iconLoginBtn(
-                      //     '송하로 로그인',
-                      //     Icon(
-                      //       Icons.settings,
-                      //       color: Colors.blueGrey,
-                      //     ),
-                      //     {checkLogin()}),
-                      // iconLoginBtn(
-                      //     'apple로 로그인',
-                      //     Icon(
-                      //       Icons.apple,
-                      //       color: Colors.black,
-                      //     ),
-                      //     {}),
-                    ],
-                  ),
+                  Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                      alignment: Alignment(-1.0, 0.0),
+                      child: IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () => {Navigator.pop(context)},
+                      )),
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      padding: EdgeInsets.all(40),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              inputBox("아이디 또는 이메일", _emailController),
+                              inputBox("비밀번호", _passwordController),
+                              selfLoginBtn(),
+                              Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.all(20),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () => checkLogin(),
+                                          child: Text(
+                                            '아이디 찾기',
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.grey.shade600),
+                                          ),
+                                        ),
+                                        Text('  |  ',
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.grey.shade600)),
+                                        TextButton(
+                                          onPressed: () => {},
+                                          child: Text('비밀번호 찾기',
+                                              style: TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.grey.shade600)),
+                                        )
+                                      ]))
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              // TextButton(onPressed: () => {}, child: Container()),
+                              iconLoginBtn(
+                                  '페이스북으로 로그인', Icon(Icons.facebook), test),
+                              // iconLoginBtn(
+                              //     '송하로 로그인',
+                              //     Icon(
+                              //       Icons.settings,
+                              //       color: Colors.blueGrey,
+                              //     ),
+                              //     {checkLogin()}),
+                              // iconLoginBtn(
+                              //     'apple로 로그인',
+                              //     Icon(
+                              //       Icons.apple,
+                              //       color: Colors.black,
+                              //     ),
+                              //     {}),
+                            ],
+                          ),
+                        ],
+                      )),
                 ],
-              )),
-        ],
-      ),
-    );
-    ;
+              ),
+            );
+          }
+          print(FirebaseAuth.instance.currentUser);
+          Navigator.pop(context);
+          return new MyPage();
+        });
   }
 }
 

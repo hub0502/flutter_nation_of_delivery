@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nation_of_delivery/pages/HomePage.dart';
 import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
-import 'package:flutter_nation_of_delivery/pages/Shops.dart';
+import 'package:flutter_nation_of_delivery/pages/ShopsPage.dart';
+import 'package:flutter_nation_of_delivery/pages/UserInfoModifyPage.dart';
 import 'package:flutter_nation_of_delivery/pages/WidgetPage.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -27,9 +29,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(routes: {
       '/': (context) => Home(),
       '/widgets': (context) => Widgets(),
-      '/shops': (context) => Shops(),
+      '/shops': (context) => ShopsPage(),
       '/mypage': (context) => MyPage(),
-      '/login': (context) => LoginPage()
+      '/login': (context) => LoginPage(),
+      '/mypage/modify': (context) => UserInfoModifyPage(),
     }, initialRoute: '/');
   }
 }

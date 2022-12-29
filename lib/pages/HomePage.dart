@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -16,80 +17,83 @@ class Home extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          child: Text('주소'),
+        appBar: AppBar(
+          title: Container(
+            child: Text('주소'),
+          ),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.widgets),
+                onPressed: () => {Navigator.pushNamed(context, '/widgets')}),
+            IconButton(
+                icon: Icon(Icons.notifications_none), onPressed: () => {}),
+            IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () => {Navigator.pushNamed(context, '/mypage')}),
+          ],
         ),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.widgets),
-              onPressed: () => {Navigator.pushNamed(context, '/widgets')}),
-          IconButton(icon: Icon(Icons.notifications_none), onPressed: () => {}),
-          IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () => {Navigator.pushNamed(context, '/mypage')}),
-        ],
-      ),
-      body: Column(children: [
-        Container(
-            color: Colors.blue,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: TextFormField(
-                  decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                border: InputBorder.none,
-                fillColor: Colors.white,
-                filled: true,
-                hintText: '배고프니까 일단 검색!!',
+        body: Column(children: [
+          Container(
+              color: Colors.blue,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: TextFormField(
+                    decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  border: InputBorder.none,
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: '배고프니까 일단 검색!!',
+                )),
               )),
-            )),
-        Padding(
-            padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
+          Padding(
+              padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: bannerData
+                      .map((e) => Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                          child: TextButton(
+                            child: Text(
+                              '${e["name"]}',
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 22.0),
+                            ),
+                            style: ButtonStyle(
+                                padding: MaterialStatePropertyAll(
+                                    EdgeInsets.all(15)),
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        side: BorderSide(
+                                            color: Colors.blue.shade300)))),
+                            onPressed: () =>
+                                {Navigator.pushNamed(context, '${e["link"]}')},
+                          )))
+                      .toList(),
+                ),
+              )),
+          Padding(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+            child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: bannerData
-                    .map((e) => Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                        child: TextButton(
-                          child: Text(
-                            '${e["name"]}',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 22.0),
-                          ),
-                          style: ButtonStyle(
-                              padding:
-                                  MaterialStatePropertyAll(EdgeInsets.all(15)),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      side: BorderSide(
-                                          color: Colors.blue.shade300)))),
-                          onPressed: () =>
-                              {Navigator.pushNamed(context, '${e["link"]}')},
-                        )))
-                    .toList(),
-              ),
-            )),
-        Padding(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: MediaQuery.of(context).size.height * 0.2,
-                color: Colors.red),
-            Container(
-                width: MediaQuery.of(context).size.width * 0.4,
-                height: MediaQuery.of(context).size.height * 0.2,
-                color: Colors.amber)
-          ]),
-        )
-      ]),
-    );
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      color: Colors.red),
+                  Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      color: Colors.amber)
+                ]),
+          ),
+          IconButton(onPressed: () => {}, icon: Icon(Icons.abc_outlined))
+        ]));
   }
 }
 
