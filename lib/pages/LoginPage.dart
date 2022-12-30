@@ -73,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
       try {
         var user = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
-        if (_formKey.currentState!.validate()) {}
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
         checkLogin();
       } on FirebaseAuthException catch (e) {
