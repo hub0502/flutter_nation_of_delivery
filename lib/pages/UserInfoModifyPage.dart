@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 
 import '../components/appbarsDesign.dart';
 
@@ -161,31 +162,72 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: MainAppbarDesign(
-          titleCenter: true,
-          titleText: '내 정보 수정',
-          actionButtons: [
+  Widget userState() {
+    return Padding(
+        padding: EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
             TextButton(
-                onPressed: () => {},
-                child: Text(
-                  '저장',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  setState(() {});
+                },
+                child: Text('로그아웃',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ))),
+            Text('  |  ',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                )),
+            Text('회원탈퇴',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
                 ))
           ],
-        ),
-        body: SingleChildScrollView(
-            child: Container(
-          child: Column(
-            children: [
-              userProfile(),
-              containerMargin(),
-              modifyInfo(),
-              containerMargin()
-            ],
-          ),
-        )));
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+                appBar: MainAppbarDesign(
+                  titleCenter: true,
+                  titleText: '내 정보 수정',
+                  actionButtons: [
+                    TextButton(
+                        onPressed: () => {},
+                        child: Text(
+                          '저장',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ))
+                  ],
+                ),
+                body: SingleChildScrollView(
+                    child: Container(
+                  child: Column(
+                    children: [
+                      userProfile(),
+                      containerMargin(),
+                      modifyInfo(),
+                      containerMargin(),
+                      userState()
+                    ],
+                  ),
+                )));
+          }
+          return LoginPage();
+        });
   }
 }

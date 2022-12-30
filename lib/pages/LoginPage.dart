@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
@@ -12,7 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController =
       TextEditingController(text: 'test@gmail.com'); //입력되는 값을 제어
   final TextEditingController _passwordController =
@@ -71,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       // if (_formKey.currentState!.validate()) {
       //   FocusScope.of(context).requestFocus(FocusNode());
       try {
-        var user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
         await FirebaseAuth.instance.setPersistence(Persistence.NONE);
         checkLogin();
@@ -203,6 +200,18 @@ class _LoginPageState extends State<LoginPage> {
                               //       color: Colors.black,
                               //     ),
                               //     {}),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('혹시, 배달의민족이 처음이신가요?'),
+                                  TextButton(
+                                      onPressed: () => {},
+                                      child: Text(
+                                        '회원가입',
+                                        style: TextStyle(),
+                                      ))
+                                ],
+                              )
                             ],
                           ),
                         ],

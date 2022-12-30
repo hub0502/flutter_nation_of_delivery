@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MainAppbarDesign extends StatelessWidget implements PreferredSizeWidget {
   List<Widget> actionButtons;
   String titleText;
@@ -11,7 +12,6 @@ class MainAppbarDesign extends StatelessWidget implements PreferredSizeWidget {
       required this.actionButtons});
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(70);
 
   @override
