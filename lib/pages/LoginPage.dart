@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
+import 'package:flutter_nation_of_delivery/services/LoginService.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,10 +11,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController =
       TextEditingController(text: 'test@gmail.com'); //입력되는 값을 제어
   final TextEditingController _passwordController =
       TextEditingController(text: '123456');
+  TextEditingController _nameController = TextEditingController(text: 'leedo');
 
   Widget inputBox(String title, TextEditingController con) {
     return Column(
@@ -58,56 +61,30 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void checkLogin() {
-    print(FirebaseAuth.instance.currentUser);
+  _login() async {
+    Login user = Login(
+        emailController: _emailController.text,
+        name: _nameController.text,
+        passwordController: _passwordController.text);
+    if (!await user.toLogin()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('login failed'),
+          backgroundColor: Colors.deepOrange,
+        ),
+      );
+    }
   }
 
   Widget selfLoginBtn() {
-    _login() async {
-      //키보드 숨기기
-      // if (_formKey.currentState!.validate()) {
-      //   FocusScope.of(context).requestFocus(FocusNode());
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: _emailController.text, password: _passwordController.text);
-        await FirebaseAuth.instance.setPersistence(Persistence.NONE);
-        checkLogin();
-      } on FirebaseAuthException catch (e) {
-        print(e);
-        print(e.code);
-        String message = e.code;
-
-        if (e.code == 'user-not-found') {
-          message = '사용자가 존재하지 않습니다.';
-        } else if (e.code == 'wrong-password') {
-          message = '비밀번호를 확인하세요';
-        } else if (e.code == 'invalid-email') {
-          message = '이메일을 확인하세요.';
-        }
-
-        /*final snackBar = SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.deepOrange,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      */
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              message,
-            ),
-            backgroundColor: Colors.deepOrange,
-          ),
-        );
-      }
-      // Firebase 사용자 인증, 사용자 등록
-    }
+    // Firebase 사용자 인증, 사용자 등록
 
     return TextButton(
         style:
             ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.all(0))),
-        onPressed: () => _login(),
+        onPressed: () {
+          _login();
+        },
         child: Container(
           width: double.infinity,
           height: 70,
@@ -148,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Column(
                             children: [
+                              inputBox("이름", _nameController),
                               inputBox("아이디 또는 이메일", _emailController),
                               inputBox("비밀번호", _passwordController),
                               selfLoginBtn(),
@@ -159,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         TextButton(
-                                          onPressed: () => checkLogin(),
+                                          onPressed: () => {},
                                           child: Text(
                                             '아이디 찾기',
                                             style: TextStyle(
@@ -205,7 +183,10 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   Text('혹시, 배달의민족이 처음이신가요?'),
                                   TextButton(
-                                      onPressed: () => {},
+                                      onPressed: () => {
+                                            Navigator.pushNamed(
+                                                context, '/createUser')
+                                          },
                                       child: Text(
                                         '회원가입',
                                         style: TextStyle(),
@@ -220,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
           }
-          print(FirebaseAuth.instance.currentUser);
+          print(FirebaseAuth.instance.currentUser!);
           Navigator.pop(context);
           return new MyPage();
         });

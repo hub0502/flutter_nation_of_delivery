@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 
 import '../components/appbarsDesign.dart';
 
@@ -171,6 +170,7 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
             TextButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
+                  Navigator.pop(context);
                   setState(() {});
                 },
                 child: Text('로그아웃',
@@ -195,6 +195,17 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
         ));
   }
 
+  ScaffoldFeatureController errorBar(message) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+        ),
+        backgroundColor: Colors.deepOrange,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -207,7 +218,15 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
                   titleText: '내 정보 수정',
                   actionButtons: [
                     TextButton(
-                        onPressed: () => {},
+                        onPressed: () {
+                          String message = '';
+                          if (_newPassword.text.length < 10 ||
+                              _prePassword.text.length < 10) {
+                            message = '10자 이상 써주세요';
+                          }
+                          errorBar(FirebaseAuth.instance.currentUser!.email
+                              .toString());
+                        },
                         child: Text(
                           '저장',
                           style: TextStyle(color: Colors.black, fontSize: 16),
@@ -227,7 +246,56 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
                   ),
                 )));
           }
-          return LoginPage();
+          return Scaffold(
+              appBar: MainAppbarDesign(
+                  titleCenter: true,
+                  titleText: 'not access',
+                  actionButtons: []),
+              body: Container(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        child: Column(children: [
+                          Text(
+                            '로그인 시 이용하실 수 있는 서비스입니다.',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            '로그인 후 다시 이용해주세요.',
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ]),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ))
+
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     Padding(
+              //       padding: const EdgeInsets.all(30.0),
+              //       child: SizedBox(
+              //         height: 60,
+              //         width: 200,
+              //         child: ElevatedButton.icon(
+              //           onPressed: () {},
+              //           style: ButtonStyle(
+              //             backgroundColor:
+              //                 MaterialStateProperty.all(Colors.red.shade800),
+              //           ),
+              //           icon: Icon(Icons.person_add_alt_1_rounded, size: 18),
+              //           label: Text("Register Users"),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // )
+              );
         });
   }
 }

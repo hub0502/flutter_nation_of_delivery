@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nation_of_delivery/services/LoginService.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -91,7 +92,11 @@ class Home extends StatelessWidget {
                       color: Colors.amber)
                 ]),
           ),
-          IconButton(onPressed: () => {}, icon: Icon(Icons.abc_outlined))
+          IconButton(
+              onPressed: () {
+                print(Login(name: 'asd').name);
+              },
+              icon: Icon(Icons.abc_outlined))
         ]));
   }
 }

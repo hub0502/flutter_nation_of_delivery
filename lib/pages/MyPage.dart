@@ -9,7 +9,7 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  Widget statefulButton(routeName, text) {
+  Widget statefulButton(String routeName, text) {
     return TextButton(
         onPressed: () => {Navigator.pushNamed(context, routeName)},
         child: Container(

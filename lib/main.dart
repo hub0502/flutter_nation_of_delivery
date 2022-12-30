@@ -4,6 +4,7 @@ import 'package:flutter_nation_of_delivery/pages/HomePage.dart';
 import 'package:flutter_nation_of_delivery/pages/LoginPage.dart';
 import 'package:flutter_nation_of_delivery/pages/MyPage.dart';
 import 'package:flutter_nation_of_delivery/pages/ShopsPage.dart';
+import 'package:flutter_nation_of_delivery/pages/UserCreatePage.dart';
 import 'package:flutter_nation_of_delivery/pages/UserInfoModifyPage.dart';
 import 'package:flutter_nation_of_delivery/pages/WidgetPage.dart';
 import 'firebase_options.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       '/mypage': (context) => MyPage(),
       '/login': (context) => LoginPage(),
       '/mypage/modify': (context) => UserInfoModifyPage(),
+      '/createUser': (context) => UserCreatePage()
     }, initialRoute: '/');
   }
 }
