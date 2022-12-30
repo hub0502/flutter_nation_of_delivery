@@ -50,38 +50,34 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
 
   Widget passwordCheck(String text, _controller) {
     return Column(children: [
-      Container(
-          color: Colors.blue,
-          child: Row(
-            children: [
-              Container(
-                color: Colors.red,
-                width: 150,
-                child: Text(
-                  text,
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
-                ),
-              ),
-              Expanded(
-                  child: Container(
-                      color: Colors.amber,
-                      child: TextField(
-                        enabled: activeChange,
-                        maxLength: 20,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(0),
-                              borderSide: BorderSide.none),
-                          hintText: text == '신규 비밀번호' ? '10-20자 이내' : '',
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                        ),
-                        style: TextStyle(fontSize: 20),
-                        controller: _controller,
-                        obscureText: true,
-                      )))
-            ],
-          )),
+      Row(
+        children: [
+          Container(
+            width: 150,
+            child: Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+          ),
+          Expanded(
+              child: TextField(
+            enabled: activeChange,
+            maxLength: 20,
+            decoration: InputDecoration(
+              counterText: '',
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(0),
+                  borderSide: BorderSide.none),
+              hintText: text == '신규 비밀번호' ? '10-20자 이내' : '',
+              filled: true,
+              fillColor: Colors.grey.shade300,
+            ),
+            style: TextStyle(fontSize: 20),
+            controller: _controller,
+            obscureText: true,
+          ))
+        ],
+      ),
       SizedBox(
         height: 20,
       )
