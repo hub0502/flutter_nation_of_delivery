@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Login {
-  var name;
   var passwordController;
   var emailController;
 
-  Login({this.name, this.emailController, this.passwordController}) {}
+  Login({this.emailController, this.passwordController}) {}
 
   Future<bool> toLogin() async {
     try {

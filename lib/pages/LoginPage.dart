@@ -16,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
       TextEditingController(text: 'test@gmail.com'); //입력되는 값을 제어
   final TextEditingController _passwordController =
       TextEditingController(text: '123456');
-  TextEditingController _nameController = TextEditingController(text: 'leedo');
 
   Widget inputBox(String title, TextEditingController con) {
     return Column(
@@ -64,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
   _login() async {
     Login user = Login(
         emailController: _emailController.text,
-        name: _nameController.text,
         passwordController: _passwordController.text);
     if (!await user.toLogin()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -125,7 +123,6 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Column(
                             children: [
-                              inputBox("이름", _nameController),
                               inputBox("아이디 또는 이메일", _emailController),
                               inputBox("비밀번호", _passwordController),
                               selfLoginBtn(),
@@ -201,8 +198,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
           }
-          print(FirebaseAuth.instance.currentUser!);
+          // print(FirebaseAuth.instance.currentUser!);
           Navigator.pop(context);
+
           return new MyPage();
         });
   }

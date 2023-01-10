@@ -206,6 +206,18 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
     );
   }
 
+  Future<bool> currentPasswordCheck() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: FirebaseAuth.instance.currentUser!.email.toString(),
+          password: _prePassword.text);
+    } catch (e) {
+      print(e);
+      return true;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -218,14 +230,18 @@ class _UserInfoModifyPageState extends State<UserInfoModifyPage> {
                   titleText: '내 정보 수정',
                   actionButtons: [
                     TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           String message = '';
-                          if (_newPassword.text.length < 10 ||
-                              _prePassword.text.length < 10) {
-                            message = '10자 이상 써주세요';
-                          }
-                          errorBar(FirebaseAuth.instance.currentUser!.email
-                              .toString());
+                          if (activeChange) {
+                            if (_newPassword.text.length < 10) {
+                              errorBar('10자 이상 써주세요');
+                            } else if (await currentPasswordCheck()) {
+                              errorBar('비밀번호가 올바르지 않습니다.');
+                            } else {
+                              User? user = FirebaseAuth.instance.currentUser;
+                              user?.updatePassword(_newPassword.text);
+                            }
+                          } else {}
                         },
                         child: Text(
                           '저장',

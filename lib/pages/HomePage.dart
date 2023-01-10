@@ -31,6 +31,7 @@ class Home extends StatelessWidget {
                 icon: Icon(Icons.person),
                 onPressed: () => {Navigator.pushNamed(context, '/mypage')}),
           ],
+          elevation: 0,
         ),
         body: Column(children: [
           Container(
@@ -92,11 +93,6 @@ class Home extends StatelessWidget {
                       color: Colors.amber)
                 ]),
           ),
-          IconButton(
-              onPressed: () {
-                print(Login(name: 'asd').name);
-              },
-              icon: Icon(Icons.abc_outlined))
         ]));
   }
 }
